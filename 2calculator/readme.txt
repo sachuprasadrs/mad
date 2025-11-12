@@ -1,48 +1,46 @@
-Program 2: Simple Calculator App (Custom Keypad)
-Aim
-To design an Android app that presents a calculator interface using only button input (number keys, basic operators, clear, backspace). Tap buttons to build an arithmetic expression, use clear/backspace for corrections, and display the evaluated result.
+Program 2: Simple Calculator App (Android Java)
+Let's master building a simple calculator app in Android Studio with a clean algorithm, efficient code, and all non-repetitive viva content. This app performs addition, subtraction, multiplication, and division on two numbers input by the user.
 
-Refurbished Algorithm (Stepwise)
-Start a new Android project (CalculatorApp) with an Empty Activity.
+Aim
+To design an Android app that allows the user to enter two numbers and perform basic arithmetic operations (add, subtract, multiply, divide), displaying the result.
+
+Algorithm (Refurbished & Stepwise)
+Start a new Android project ("CalculatorApp") with an Empty Activity.
 
 In activity_main.xml:
 
-Use a vertical layout centered (android:gravity="center").
+Place two EditText fields for number input (with inputType="numberDecimal").
 
-Place a TextView at the top for display.
+Add four Button views for addition, subtraction, multiplication, and division (arranged horizontally).
 
-Use a GridLayout for a keypad:
-
-Four rows: numbers (7–9, 4–6, 1–3, C/0/⌫/+/-/*//)
-
-Operators and action keys (division, multiplication, subtraction, addition, equals, clear, backspace).
-
-Swap the positions of clear and 0, placing "0" at bottom-left.
-
-Center align all buttons and display.
+Add a TextView to display the result.
 
 In MainActivity.java:
 
-Link TextView and all button views using findViewById.
+Link XML widgets (EditText, Button, TextView) to Java variables using findViewById().
 
-Maintain a string for current expression.
+Add OnClickListener to each button.
 
-On button tap, append digits/operators appropriately.
+On button press:
 
-Backspace = delete last character. Clear = reset input.
+Read numbers from the EditTexts as double.
 
-On "=": evaluate the arithmetic expression and display result.
+Perform the selected operation.
 
-Handle invalid expressions/divide by zero by showing "Error".
+Display the result in the TextView.
 
-Test all possible input sequences including erase/correction.
+Handle invalid input (e.g., division by zero, empty fields) by showing a Toast.
+
+Test the app with valid and invalid inputs, checking all operations and displaying user-friendly error messages as needed.
 
 Files to Alter
-res/layout/activity_main.xml (UI keypad, display, button arrangement)
+res/layout/activity_main.xml (UI design)
 
-java/com.example.calculatorapp/MainActivity.java (logic for input/build/evaluate)
+java/com.example.calculatorapp/MainActivity.java (logic for calculator)
 
-Complete Code
+No changes are needed to the manifest or Gradle files for a simple app like this.
+
+Complete Code (Concise & Commented)
 1. activity_main.xml
 xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -51,52 +49,64 @@ xml
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="14dp">
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/number1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter first number"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="12dp" />
+
+    <EditText
+        android:id="@+id/number2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter second number"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="16dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="+" />
+        <Button
+            android:id="@+id/subtractButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="-" />
+        <Button
+            android:id="@+id/multiplyButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="×" />
+        <Button
+            android:id="@+id/divideButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="÷" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/display"
+        android:id="@+id/resultText"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:text="0"
-        android:textSize="32sp"
-        android:gravity="center"
-        android:background="#222"
-        android:textColor="#fff"
-        android:padding="16dp"
-        android:layout_marginBottom="8dp" />
-
-    <GridLayout
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:columnCount="4"
-        android:rowCount="5"
-        android:gravity="center">
-        <!-- Row 1 -->
-        <Button android:id="@+id/btn7" android:text="7" />
-        <Button android:id="@+id/btn8" android:text="8" />
-        <Button android:id="@+id/btn9" android:text="9" />
-        <Button android:id="@+id/btnDiv" android:text="/" />
-        <!-- Row 2 -->
-        <Button android:id="@+id/btn4" android:text="4" />
-        <Button android:id="@+id/btn5" android:text="5" />
-        <Button android:id="@+id/btn6" android:text="6" />
-        <Button android:id="@+id/btnMul" android:text="*" />
-        <!-- Row 3 -->
-        <Button android:id="@+id/btn1" android:text="1" />
-        <Button android:id="@+id/btn2" android:text="2" />
-        <Button android:id="@+id/btn3" android:text="3" />
-        <Button android:id="@+id/btnSub" android:text="-" />
-        <!-- Row 4: Swapped 'C' and '0' -->
-        <Button android:id="@+id/btn0" android:text="0" />
-        <Button android:id="@+id/btnClear" android:text="C" />
-        <Button android:id="@+id/btnBack" android:text="⌫" />
-        <Button android:id="@+id/btnAdd" android:text="+" />
-        <!-- Row 5: Equals button, rest empty for symmetry -->
-        <View android:layout_width="0dp" android:layout_height="0dp" />
-        <View android:layout_width="0dp" android:layout_height="0dp" />
-        <View android:layout_width="0dp" android:layout_height="0dp" />
-        <Button android:id="@+id/btnEq" android:text="=" />
-    </GridLayout>
+        android:text="Result will appear here"
+        android:textSize="20sp"
+        android:layout_marginTop="18dp"
+        android:gravity="center" />
 
 </LinearLayout>
 2. MainActivity.java
@@ -105,131 +115,129 @@ package com.example.calculatorapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    TextView display;
-    String currentInput = "";
+    EditText number1, number2;
+    Button addButton, subtractButton, multiplyButton, divideButton;
+    TextView resultText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        display = findViewById(R.id.display);
 
-        int[] numIds = {R.id.btn0,R.id.btn1,R.id.btn2,R.id.btn3,R.id.btn4,R.id.btn5,R.id.btn6,R.id.btn7,R.id.btn8,R.id.btn9};
-        int[] opIds = {R.id.btnAdd, R.id.btnSub, R.id.btnMul, R.id.btnDiv};
-        Button btnEq = findViewById(R.id.btnEq);
-        Button btnClear = findViewById(R.id.btnClear);
-        Button btnBack = findViewById(R.id.btnBack);
+        // Connect UI to code
+        number1 = findViewById(R.id.number1);
+        number2 = findViewById(R.id.number2);
+        addButton = findViewById(R.id.addButton);
+        subtractButton = findViewById(R.id.subtractButton);
+        multiplyButton = findViewById(R.id.multiplyButton);
+        divideButton = findViewById(R.id.divideButton);
+        resultText = findViewById(R.id.resultText);
 
-        for(int i=0; i<=9; i++) {
-            Button b = findViewById(numIds[i]);
-            final int fi = i;
-            b.setOnClickListener(v -> {
-                currentInput += String.valueOf(fi);
-                updateDisplay();
-            });
-        }
-        for(int id : opIds) {
-            Button opBtn = findViewById(id);
-            opBtn.setOnClickListener(v -> {
-                String op = ((Button)v).getText().toString();
-                if (currentInput.isEmpty()) return;
-                char last = currentInput.charAt(currentInput.length() - 1);
-                if (last=='+'||last=='-'||last=='*'||last=='/') return;
-                currentInput += op;
-                updateDisplay();
-            });
-        }
-        btnEq.setOnClickListener(v -> {
-            if (currentInput.isEmpty()) return;
-            try {
-                double result = eval(currentInput);
-                display.setText(String.valueOf(result));
-                currentInput = "";
-            } catch (Exception e) {
-                display.setText("Error");
-                currentInput = "";
+        addButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                calculate("add");
             }
         });
-        btnClear.setOnClickListener(v -> {
-            currentInput = "";
-            updateDisplay();
+        subtractButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                calculate("sub");
+            }
         });
-        btnBack.setOnClickListener(v -> {
-            if (!currentInput.isEmpty()) {
-                currentInput = currentInput.substring(0, currentInput.length() - 1);
-                updateDisplay();
+        multiplyButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                calculate("mul");
+            }
+        });
+        divideButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                calculate("div");
             }
         });
     }
-    private void updateDisplay() {
-        display.setText(currentInput.isEmpty() ? "0" : currentInput);
-    }
-    private double eval(String expr) {
-        double result = 0;
-        char lastOp = '+';
-        int i=0, n=expr.length();
-        String num = "";
-        while(i<n){
-            char c = expr.charAt(i);
-            if(Character.isDigit(c)) num+=c;
-            else if(c=='+'||c=='-'||c=='*'||c=='/'){
-                if(num.isEmpty()) throw new RuntimeException();
-                double val = Double.parseDouble(num);
-                result = applyOp(result, val, lastOp);
-                lastOp = c;
-                num = "";
+
+    // Perform calculation with error handling
+    private void calculate(String op) {
+        String s1 = number1.getText().toString().trim();
+        String s2 = number2.getText().toString().trim();
+        if (s1.isEmpty() || s2.isEmpty()) {
+            Toast.makeText(this, "Enter both numbers", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try {
+            double n1 = Double.parseDouble(s1);
+            double n2 = Double.parseDouble(s2);
+            double res = 0;
+            switch (op) {
+                case "add": res = n1 + n2; break;
+                case "sub": res = n1 - n2; break;
+                case "mul": res = n1 * n2; break;
+                case "div":
+                    if (n2 == 0) {
+                        Toast.makeText(this, "Cannot divide by zero", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    res = n1 / n2;
+                    break;
             }
-            i++;
+            resultText.setText("Result: " + res);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
         }
-        if(!num.isEmpty()) result = applyOp(result, Double.parseDouble(num), lastOp);
-        return result;
-    }
-    private double applyOp(double a, double b, char op){
-        switch(op){
-            case '+': return a+b;
-            case '-': return a-b;
-            case '*': return a*b;
-            case '/': if(b==0) throw new ArithmeticException(); return a/b;
-        }
-        return b;
     }
 }
-Explanation of Key Lines
-UI Alignment: Outer LinearLayout and GridLayout centered; TextView content is centered via android:gravity="center".
+Explanation of Key Lines (with context)
+EditText & Button Linking:
 
-Button Swapping: The "0" button is now bottom-left, "C" next to it.
+number1 = findViewById(R.id.number1); connects XML input to your Java variable.
 
-Input Logic: Button clicks build a string, backspace erases last, clear resets.
+Reading Input:
 
-Evaluation: Simple left-to-right; errors handled as "Error".
+number1.getText().toString() fetches user input as String.
 
-Viva Questions (Non-Repetitive)
-Q1. How would you center all the calculator's display and buttons in the layout?
+Event Listeners:
 
-Set android:gravity="center" for parent LinearLayout, GridLayout, and the TextView.
+Each button's setOnClickListener triggers calculate() with the right operation.
 
-Q2. How do you swap the positions of two buttons in a GridLayout?
+Calculation & Validation:
 
-Change their order in the XML: put the desired button as the first/last child in its row.
+Check for empty fields, parse numbers, prevent division by zero, catch input errors.
 
-Q3. What is the role of the backspace and clear buttons?
+Display Result:
 
-Backspace deletes the last character of input, clear resets the expression to empty.
+resultText.setText(...) updates the result display.
 
-Q4. How does the calculator app prevent two operators from being entered consecutively?
+Error Handling:
 
-In code, check the last character before appending a new operator; if it's already an operator, ignore the input.
+Toast.makeText() shows messages for invalid entries.
 
-Q5. If result is 'Error', what could have happened?
+Possible Viva Questions (Non-Repetitive)
+Q1. How do you connect an EditText from XML to Java code?
 
-User tried an invalid calculation, e.g., dividing by zero or entering an invalid expression.
+Use findViewById(R.id.editTextId); to get a reference to the input field in Java.
 
-Q6. What file would you update to change button arrangement?
+Q2. How do you ensure only numbers are entered?
 
-The XML layout file: activity_main.xml.
+In XML, set android:inputType="numberDecimal" for EditText fields.
 
+Q3. How can you handle a division-by-zero error?
+
+Check if the denominator is zero before performing division and show an error message if it is.
+
+Q4. What is NumberFormatException and why is it handled?
+
+NumberFormatException occurs when input cannot be parsed to a number; handling it prevents app crashes due to bad input.
+
+Q5. Why do we use setOnClickListener for the buttons?
+
+To define the specific operation that should run when the user taps an arithmetic button.
+
+Q6. How do you show concise feedback for invalid input?
+
+Use a Toast: Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
